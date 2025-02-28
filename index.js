@@ -1,8 +1,11 @@
 const axios = require('axios');
+const express= require('express');
+const app = express();
 const cheerio = require('cheerio');
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
 require('dotenv').config();
+const PORT = process.env.PORT || 3000;
 
 // News scraping function
 async function fetchNewsFromPage(pageNumber) {
@@ -171,27 +174,33 @@ async function runNewsScraperJob() {
   }
 }
 
-// Schedule the news scraper job to run daily at 8:00 AM
-// Cron format: * * * * * *
-//              | | | | | |
-//              | | | | | day of week (0-7, where 0 and 7 are Sunday)
-//              | | | | month (1-12)
-//              | | | day of month (1-31)
-//              | | hour (0-23)
-//              | minute (0-59)
-//              second (0-59, optional)
 
-cron.schedule('0 8 * * *', () => {
-  runNewsScraperJob();
-});
+app.get('/', (req, res) => {
+    res.send('News scraper service is running!');
+  });
+  
+  // Add a health check endpoint (useful for monitoring)
+  app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+  });
+  
+  // Optional: Add an endpoint to trigger the scraper manually
+  app.get('/run-scraper', async (req, res) => {
+    try {
+      await runNewsScraperJob();
+      res.status(200).json({ status: 'success', message: 'News scraper job completed' });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: error.message });
+    }
+  });
 
-
-runNewsScraperJob();
-
-console.log('News scraper scheduled to run daily at 8:00 AM');
-
-// Keep the script running
-process.on('SIGINT', () => {
-  console.log('Stopping the news scraper service');
-  process.exit();
-});
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    
+    // Schedule the news scraper job
+    cron.schedule('0 8 * * *', () => {
+      runNewsScraperJob();
+    });
+    
+    console.log('News scraper scheduled to run daily at 8:00 AM');
+  });
