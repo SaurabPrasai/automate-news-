@@ -201,5 +201,5 @@ app.get('/', (req, res) => {
         runNewsScraperJob();
       });
     
-    console.log('News scraper scheduled to run daily at 8:00 AM');
+    console.log('Scheduled news scraper job to run every day at 5:00 AM according to my server');
   });
