@@ -197,10 +197,9 @@ app.get('/', (req, res) => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     
-    // Schedule the news scraper job
-    cron.schedule('0 8 * * *', () => {
-      runNewsScraperJob();
-    });
+    cron.schedule('15 10 * * *', () => {
+        runNewsScraperJob();
+      });
     
     console.log('News scraper scheduled to run daily at 8:00 AM');
   });
