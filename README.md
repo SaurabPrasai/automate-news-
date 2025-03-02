@@ -43,4 +43,6 @@ Use cron jobs to automate according to your desired time.
 
 Set the schedule to your desired frequency (e.g., every 24 hours) to automate news emails.
 
+The news are scrapped from myrepublica .
+
 
