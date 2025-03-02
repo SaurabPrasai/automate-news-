@@ -6,8 +6,8 @@ Automate News is a project that fetches news and sends it to specified email add
 
 ### 1. Clone the Repository
 ```sh
-git clone https://github.com/yourusername/automate-news.git
-cd automate-news
+git clone https://github.com/SaurabPrasai/automate-news-.git
+cd automate-news-
 ```
 
 ### 2. Install Dependencies
