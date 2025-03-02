@@ -40,9 +40,7 @@ node index.js
 
 ### 6. Automate with Cron Jobs
 Use cron jobs to automate according to your desired time.
-```sh
-node index.js
-```
+
 Set the schedule to your desired frequency (e.g., every 24 hours) to automate news emails.
 
 
